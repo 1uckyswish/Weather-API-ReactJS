@@ -21,7 +21,7 @@ const WeatherCard = ({
 }) => {
 
   const [icon, setIcon] = useState(sun)
-  const { time } = useDate()
+  const time = useDate()
   const celsius = temperature;
   const fahrenheit = Math.round((celsius * 9/5) + 32);
 
@@ -54,8 +54,8 @@ const WeatherCard = ({
       <div className='font-bold text-center text-xl'>
         {place}
       </div>
-      <div className='w-full flex justify-between items-center mt-4'>
-        <p className='flex-1 text-center p-2'>{new Date().toDateString()}</p>
+      <div className='w-full flex justify-between items-center mt-4 text-center'>
+        <p className='flex-1 text-center '>{new Date().toDateString()}</p>
         <p className='flex-1 text-center p-2'>{time}</p>
       </div>
       <div className='w-full flex justify-between items-center mt-4 gap-4'>

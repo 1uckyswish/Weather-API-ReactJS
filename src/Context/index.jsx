@@ -6,7 +6,7 @@ const StateContext = createContext()
 export const StateContextProvider = ({ children }) => {
     const [weather, setWeather] = useState({})
     const [values, setValues] = useState([])
-    const [place, setPlace] = useState('Rock Hill')
+    const [place, setPlace] = useState('New York')
     const [thisLocation, setLocation] = useState('')
 
     // fetch api

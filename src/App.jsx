@@ -3,25 +3,61 @@ import Search from './assets/icons/search.svg'
 import './App.css'
 import { useStateContext } from './Context';
 import BackgroundLayout from './Componets/BackgroundLayout';
+import WeatherCard from './Componets/WeatherCard';
+import MiniCard from './Componets/MiniCard';
 
 function App() {
   const [input, setInput] = useState('');
-  //  const {weather} = useStateContext();
+   const {weather, thisLocation, values, place, setPlace} = useStateContext();
   // console.log(weather);
+  const submitCity = ()=>{
+    setPlace(input)
+    setInput('');
+  }
 
   return (
     <div className='w-full h-screen text-black px-8'>
       <nav className='w-full p-3 flex justify-between items-center'>
         <h1 className='font-bold tracking-wide text-3xl'>Weather App</h1>
-        <div className='bg-red-500 w-[15rem] overflow-hidden shadow-2xl rounded flex items-center p-2 gap-2'>
+        <div className='bg-white w-[15rem] overflow-hidden shadow-2xl rounded flex items-center p-2 gap-2'>
           <img src={Search} alt="search" className='w-[1.5rem] h-[1.5rem]'/>
-          <input type='text' value={input} onChange={(e)=> setInput(e.target.value)} className='focus:outline-none w-full text-[#212121] text-lg'/>
+          <input
+          onKeyUp={(e)=>{
+            if(e.key === 'Enter'){
+              submitCity()
+            }
+          }}
+          placeholder="Search City"
+          type='text' 
+          value={input} 
+          onChange={(e)=> setInput(e.target.value)} 
+          className='focus:outline-none w-full text-[#212121] text-lg'/>
 
         </div>
       </nav>
       <BackgroundLayout />
       <main className='w-full flex flex-wrap gap-8 py-4 px-[10%] items-center justify-center'>
-
+        <WeatherCard 
+        place={thisLocation}
+        windspeed={weather.wspd}
+        humidity={weather.humidity}
+        temperature={weather.temp}
+        heatIndex={weather.heatindex}
+        iconString={weather.conditions}
+        conditions={weather.conditions}
+        />
+        <div className='flex justify-center gap-8 flex-wrap w-[60%]'>
+          {
+            values?.slice(1,7).map((curr)=>{
+             return (<MiniCard
+              key={curr.datetime}
+              time={curr.datetime}
+              temp={curr.temp}
+              iconString={curr.conditions}
+              />)
+            })
+          }
+        </div>
       </main>
     </div>
   )
